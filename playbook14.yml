@@ -1,0 +1,23 @@
+---
+- name: Error Handling
+  hosts: all
+  tasks:
+    - block:
+        - name: Install tree using apt
+          apt:
+            name: tree
+            state: present
+            update_cache: yes
+      rescue:
+        - name: Install tree using yum
+          yum:
+            name: tree
+            state: present
+            update_cache: yes
+      always:
+        - name: Print some msg
+          debug: 
+            msg: "Tree installtion success"
+
+
+

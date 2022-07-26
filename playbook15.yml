@@ -1,0 +1,43 @@
+---
+- name: Install jenkins and required s/w's
+  hosts: jenkinserver
+  tasks:
+    - name: Install required s/w's
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}" 
+      with_items:
+        - {a: openjdk-8-jdk,b: present,c: yes}
+        - {a: git,b: present,c: no}
+        - {a: maven,b: present,c: no}
+    - name: Download jenkins.war
+      get_url:
+        url: https://get.jenkins.io/war-stable/2.346.2/jenkins.war
+        dest: /home/ubuntu
+- name: Setup tomcat and required s/w's
+  hosts: servers
+  tasks:
+    - name: Install tomcat9 and tomcat9-admin
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+        - {a: tomcat9,b: present,c: yes}
+        - {a: tomcat9-admin,b: present,c: no}
+    - name: Copy tomcat-users.xml file
+      copy:
+        src: tomcat-users.xml
+        dest: /etc/tomcat9
+      notify: Restart tomcat
+  handlers:
+    - name: Restart tomcat
+      service:
+        name: tomcat9
+        state: restarted
+
+ 
+
+
+
