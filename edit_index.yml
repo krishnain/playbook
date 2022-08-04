@@ -1,0 +1,6 @@
+---
+- name: Edit the idnex.html file
+  copy:
+    content: "IntelliqIT"
+    dest: /var/www/html/index.html
+...

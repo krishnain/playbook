@@ -1,0 +1,6 @@
+---
+- name: Restar ttomcat
+  service: 
+    name: "{{a}}"
+    state: "{{k}}"
+...

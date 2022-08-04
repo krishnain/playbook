@@ -1,0 +1,13 @@
+---
+- name: Working on docker images
+  hosts: all
+  tasks:
+    - name: Download docker images
+      docker_image:
+        name: "{{item}}"
+        source: pull
+      with_items:
+        - nginx
+        - httpd
+        - ghost
+        - tomcat

@@ -1,0 +1,13 @@
+---
+- name: Change passowrd of an exisiting user
+  hosts: all
+  tasks:
+    - name: Check for the user
+      shell: grep sai /etc/passwd
+      register: a
+  
+    - name: Change password
+      user:
+        name: sai
+        password: intelliqit
+      when: a.changed == true
